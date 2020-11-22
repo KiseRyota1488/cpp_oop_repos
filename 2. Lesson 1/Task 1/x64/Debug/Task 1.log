@@ -1,0 +1,5 @@
+﻿  Task 1.cpp
+  Task 2.cpp
+  Generating Code...
+Task 2.obj : error LNK2005: main already defined in Task 1.obj
+C:\Users\dev\Desktop\2. Lesson 1\x64\Debug\Task 1.exe : fatal error LNK1169: one or more multiply defined symbols found
