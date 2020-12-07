@@ -39,6 +39,8 @@ public:
 	{
 		cout << name << " " << price << " " << diagonal << " " << refreshRate << "\n";
 	}
+
+	~Monitor(){}
 };
 
 int main()
