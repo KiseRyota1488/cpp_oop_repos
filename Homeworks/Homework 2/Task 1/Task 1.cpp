@@ -66,7 +66,9 @@ int main()
 				}
 			}
 			else
+			{
 				cout << "Add at least 1 monitor\n";
+			}
 			break;
 		}
 		case '2':
