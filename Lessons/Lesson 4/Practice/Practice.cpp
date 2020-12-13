@@ -36,88 +36,128 @@ using namespace std;
 
 class House
 {
+
 private:
 
-    class Room
-    {
-    private:
-        int width;
-        int lenght;
-        int floor;
-    public:
-        vector <Room> rooms;
 
-       
-        Room(int width, int length, int floor)
-        {
-            this->width = width;
-            this->lenght = lenght;
-            this->floor = floor;
-        }
+	class Room
+	{
+	private:
+		int width;
+		int length;
+		int floor;
+	public:
 
-        void CreateRoom()
-        {
-            int width, lenght, floor;
-            cout << "Enter width: ";
-            cin >> width;
-            cout << "Enter lenght: ";
-            cin >> lenght;
-            cout << "Enter floor: ";
-            cin >> floor;
-            Room room = Room(width, lenght, floor);
-            rooms.push_back(room);
-        }
+		Room() {}
+		Room(int width, int length, int floor)
+		{
+			this->width = width;
+			this->length = length;
+			this->floor = floor;
+		}
 
-        void ShowRooms()
-        {
-            for (int i = 0; i < rooms.size(); i++)
-                cout << "Width: " << rooms[i].width << "\nLenght: " << rooms[i].lenght << "\nFloor: " << rooms[i].floor << endl;
-        }
+		Room CreateRoom()
+		{
+			int width, length, floor;
+			cout << "Enter width: ";
+			cin >> width;
+			cout << "Enter length: ";
+			cin >> length;
+			cout << "Enter floor: ";
+			cin >> floor;
+			Room room = Room(width, length, floor);
+			return room;
+		}
 
-        int GetWidth()
-        {
-            return width;
-        }
-        int GetLenght()
-        {
-            return width;
-        }
-        int GetFloor()
-        {
-            return floor;
-        }
 
-        void SetWidth(int width)
-        {
-            this->width = width;
-        }
-        void SetLenght(int lenght)
-        {
-            this->lenght = lenght;
-        }
-        void SetFloor(int floor)
-        {
-            this->floor = floor;
-        }
+		int GetWidth()
+		{
+			return width;
+		}
+		int Getlength()
+		{
+			return width;
+		}
+		int GetFloor()
+		{
+			return floor;
+		}
 
-        ~Room() {}
-   
+		void SetWidth(int width)
+		{
+			this->width = width;
+		}
+		void Setlength(int length)
+		{
+			this->length = length;
+		}
+		void SetFloor(int floor)
+		{
+			this->floor = floor;
+		}
 
-        
-    };
+		int GetSquare()
+		{
+			return width * length;
+		}
+
+		~Room() {}
+
+	};
+
+
 
 public:
-    House()
-    {
+	vector <Room> rooms;
+	int floors[9] = { 0 };
+	House()
+	{
 
-    }
+	}
+
+	void AddRoom()
+	{
+		Room room;
+		rooms.push_back(room.CreateRoom());
+	}
+
+	void ShowRooms()
+	{
+		for (int i = 0; i < rooms.size(); i++)
+			cout << rooms[i].GetWidth() << " " << rooms[i].Getlength() << " " << rooms[i].GetFloor() << endl;
+	}
+
+	void OverallSquare()
+	{
+		for (int i = 0; i < 9; i++)
+			for (int j = 0; j < rooms.size(); j++)
+				if (i == rooms[j].GetFloor())
+					floors[i] += rooms[j].GetSquare();
+	}
+
+	void ShowOverallSquare()
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			cout << floors[i] << endl;
+		}
+	}
+
+	~House()
+	{
+
+	}
 };
 
 int main()
 {
-    House h;
+	House house;
 
+	house.AddRoom();
+	house.AddRoom();
+	house.ShowRooms();
+	house.OverallSquare();
+	house.ShowOverallSquare();
 
-
-    return 0;
+	return 0;
 }
