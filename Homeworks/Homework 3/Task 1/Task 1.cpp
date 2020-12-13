@@ -7,14 +7,16 @@ using namespace std;
 
 void Session();
 
+
+
 class Unit
 {
 public:
-	short hp;
+	double hp;
 	short damage;
 
 	Unit() {}
-	Unit(short hp, short damage)
+	Unit(double hp, short damage)
 	{
 		this->hp = 100;
 		this->damage = rand() % 5 + 1;
@@ -28,7 +30,7 @@ public:
 	int hasShield;
 
 	Swordman() {};
-	Swordman(short hp, short damage, short hasShield) : Unit(hp, damage)
+	Swordman(double hp, short damage, short hasShield) : Unit(hp, damage)
 	{
 		this->hasShield = rand() % 2;
 	}
@@ -45,8 +47,9 @@ public:
 	short mana;
 
 	Wizard() {}
-	Wizard(short hp, short damage, short mana) : Unit(hp, damage)
+	Wizard(double hp, short damage, short mana) : Unit(hp, damage)
 	{
+		this->hp = 80;
 		this->mana = rand() % 100 + 1;
 	}
 };
@@ -57,8 +60,10 @@ public:
 	short evadeChance;
 
 	Bowman() {}
-	Bowman(short hp, short damage, short evadeChance) : Unit(hp, damage)
+	Bowman(double hp, short damage, short evadeChance) : Unit(hp, damage)
 	{
+		this->hp = 70;
+		this->damage = rand() % 10 + 1;
 		this->evadeChance = rand() % 30 + 1;
 	}
 
@@ -79,14 +84,14 @@ public:
 			bowmen[i] = bow;
 			Swordman sword(NULL, NULL, NULL);
 			swordmen[i] = sword;
-			Wizard wizard( NULL, NULL, NULL);
+			Wizard wizard(NULL, NULL, NULL);
 			wizards[i] = wizard;
 		}
 	}
 
 	int GetBowmenHP()
 	{
-		int hpS = 0;
+		double hpS = 0;
 		for (int i = 0; i < 10; i++)
 		{
 			hpS += bowmen[i].hp;
@@ -95,7 +100,7 @@ public:
 	}
 	int GetSwordmenHP()
 	{
-		int hpS = 0;
+		double hpS = 0;
 		for (int i = 0; i < 10; i++)
 		{
 			hpS += swordmen[i].hp;
@@ -104,7 +109,7 @@ public:
 	}
 	int GetWizardsHP()
 	{
-		int hpS = 0;
+		double hpS = 0;
 		for (int i = 0; i < 10; i++)
 		{
 			hpS += wizards[i].hp;
@@ -137,7 +142,10 @@ public:
 		{
 			allDamage += wizards[i].damage;
 		}
-		return allDamage;
+		if (GetWizardsMana() > 250)
+			return allDamage * 1.75;
+		else
+			return allDamage;
 	}
 
 	int GetWizardsMana()
@@ -156,28 +164,36 @@ public:
 			shields += swordmen[i].hasShield;
 		return shields * 10;
 	}
-
-	void SetBowmenHP(short hp)
+	int GetBowmenEvade()
 	{
-		int hpS = (GetBowmenHP() - 10) / 10;
+		int eChance = 0;
+		for (int i = 0; i < 10; i++)
+			eChance += bowmen[i].evadeChance;
+		return eChance;
+	}
+
+	void SetBowmenHP(double hp)
+	{
+		double hpS = hp / 10;
 		for (int i = 0; i < 10; i++)
 			bowmen[i].hp = hpS;
 	}
-	void SetSwordmenHP(short hp)
+	void SetSwordmenHP(double hp)
 	{
-		int hpS = (GetSwordmenHP() - 10) / 10;
+		double hpS = hp / 10;
 		for (int i = 0; i < 10; i++)
 			swordmen[i].hp = hpS;
 	}
-	void SetWizardsHP(short hp)
+	void SetWizardsHP(double hp)
 	{
-		int hpS = (GetWizardsHP() - hp) / 10;
+		double hpS = hp / 10;
 		for (int i = 0; i < 10; i++)
 			wizards[i].hp = hpS;
 	}
 
 };
 
+void Attack(int, int, Team&);
 
 int main()
 {
@@ -200,37 +216,141 @@ void Session()
 	do {
 		cout << setw(20) << left << "RED" << "BLUE\n";
 		cout << "Wizards:\n";
-		cout << setw(5) << "HP : " <<setw(15)<< red.GetWizardsHP() 
-			  << blue.GetWizardsHP() <<endl;
-		cout << setw(9) << "Damage : " <<setw(11)<< red.GetWizardsDamage()
-			  << blue.GetWizardsDamage() << endl;
-		cout << setw(7) << "Mana : " <<setw(13)<< red.GetWizardsMana()
-			  << blue.GetWizardsMana() << endl;
+		cout << setw(5) << "HP : " << setw(15) << red.GetWizardsHP()
+			<< blue.GetWizardsHP() << endl;
+		cout << setw(9) << "Damage : " << setw(11) << red.GetWizardsDamage()
+			<< blue.GetWizardsDamage() << endl;
+		cout << setw(7) << "Mana : " << setw(13) << red.GetWizardsMana()
+			<< blue.GetWizardsMana() << endl;
 		cout << "Swordmen:\n";
 		cout << setw(5) << "HP : " << setw(15) << red.GetSwordmenHP()
 			<< blue.GetSwordmenHP() << endl;
 		cout << setw(9) << "Damage : " << setw(11) << red.GetSwordmenDamage()
 			<< blue.GetSwordmenDamage() << endl;
-		cout << setw(9) << "Defence : " << setw(10) << red.GetSwordmenShield()  
+		cout << setw(9) << "Defence : " << setw(10) << red.GetSwordmenShield()
 			<< blue.GetSwordmenShield() << endl;
+		cout << "Bowmen:\n";
+		cout << setw(5) << "HP : " << setw(15) << red.GetBowmenHP()
+			<< blue.GetBowmenHP() << endl;
+		cout << setw(9) << "Damage : " << setw(11) << red.GetBowmenDamage()
+			<< blue.GetBowmenDamage() << endl;
+		cout << setw(7) << "Evade : " << setw(12) << red.GetBowmenEvade()
+			<< blue.GetBowmenEvade() << endl;
 
-		cout << "\n" << setw(18) <<right<< "FIGHT\n";
-		
-		if(itr%2 == 0)
+		cout << "\n" << setw(18) << right << "FIGHT\n";
+
+		if (itr % 2 == 0)
 		{
 			cout << "Red team fighting ...\n";
-			
+
 			int squad, enemiesSquad;
 			cout << "Which squad is attacking? (1 - Swordmen, 2 - Wizards, 3 - Bowmen): ";
 			cin >> squad;
+			cout << "Who are we attacking? (1 - Swordmen, 2 - Wizards, 3 - Bowmen): ";
+			cin >> enemiesSquad;
 
-			// в функції!
-			/*cout << "Who are we attacking? (1 - Swordmen, 2 - Wizards, 3 - Bowmen): ";
-			cin >> enemiesSquad;*/
+			switch (squad)
+			{
+			case 1:
+			{
+				int temp = red.GetSwordmenDamage();
+				Attack(enemiesSquad, temp, blue);
+				break;
+			}
+			case 2:
+			{
+				int temp = red.GetWizardsDamage();
+				Attack(enemiesSquad, temp, blue);
+				break;
+			}
+			case 3:
+			{
+				int temp = red.GetBowmenDamage();
+				Attack(enemiesSquad, temp, blue);
+				break;
+			}
+
+			default:
+				break;
+			}
+		}
+		else if(itr==100)
+		{
+			cout << "Blue team fighting ...\n";
+			int squad = 0, enemiesSquad = 0;
+
+			int min = blue.GetSwordmenDamage();
+			if (blue.GetBowmenDamage() > min)
+			{
+				min = blue.GetBowmenDamage();
+				squad = 3;
+			}
+			else if (blue.GetWizardsDamage() > min)
+			{
+				min = blue.GetWizardsDamage();
+				squad = 2;
+			}
+			else
+				squad = 1;
+
+			switch (squad)
+			{
+			case 1:
+			{
+				int temp = red.GetSwordmenDamage();
+				Attack(enemiesSquad, temp, blue);
+				break;
+			}
+			case 2:
+			{
+				int temp = red.GetWizardsDamage();
+				Attack(enemiesSquad, temp, blue);
+				break;
+			}
+			case 3:
+			{
+				int temp = red.GetBowmenDamage();
+				Attack(enemiesSquad, temp, blue);
+				break;
+			}
+
+			default:
+				break;
+			}
 		}
 
 		itr++;
-		key = '3';
+		if (itr == 2)
+			key = '3';
+		else
+			key = '1';
+		system("PAUSE");
 		system("cls");
 	} while (key != '3');
+}
+
+void Attack(int enemiesSquad, int damage, Team &team)
+{
+	switch (enemiesSquad)
+	{
+	case 1:
+	{
+		team.SetSwordmenHP(team.GetSwordmenHP() - damage);
+		break;
+	}
+	case 2:
+	{
+		team.SetWizardsHP(team.GetWizardsHP() - damage);
+		break;
+	}
+	case 3:
+	{
+		team.SetBowmenHP(team.GetBowmenHP() - damage);
+		break;
+	}
+	default:
+		break;
+	}
+
+
 }
