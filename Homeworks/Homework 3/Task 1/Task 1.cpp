@@ -96,7 +96,10 @@ public:
 		{
 			hpS += bowmen[i].hp;
 		}
-		return hpS;
+		if (hpS > 0)
+			return hpS;
+		else
+			return 0;
 	}
 	int GetSwordmenHP()
 	{
@@ -105,7 +108,10 @@ public:
 		{
 			hpS += swordmen[i].hp;
 		}
-		return hpS;
+		if (hpS > 0)
+			return hpS;
+		else
+			return 0;
 	}
 	int GetWizardsHP()
 	{
@@ -114,7 +120,11 @@ public:
 		{
 			hpS += wizards[i].hp;
 		}
-		return hpS;
+		if (hpS > 0)
+			return hpS;
+
+		else
+			return 0;
 	}
 
 	int GetBowmenDamage()
@@ -191,9 +201,21 @@ public:
 			wizards[i].hp = hpS;
 	}
 
+	bool GameOverCheck()
+	{
+		if (GetSwordmenHP() == 0 && GetBowmenHP() == 0 && GetWizardsHP() == 0)
+			return 1;
+		else
+			return 0;
+	}
+
 };
 
-void Attack(int, int, Team&);
+void Attack(int, double, Team&);
+
+int MaxDamageCheck(Team&);
+
+int MinHPCheck(Team&);
 
 int main()
 {
@@ -211,125 +233,76 @@ void Session()
 	red.GenerateTeam();
 	blue.GenerateTeam();
 
-	char key, space = ' ';
+	char key = '1', space = ' ';
 	int itr = 0;
 	do {
-		cout << setw(20) << left << "RED" << "BLUE\n";
-		cout << "Wizards:\n";
-		cout << setw(5) << "HP : " << setw(15) << red.GetWizardsHP()
-			<< blue.GetWizardsHP() << endl;
-		cout << setw(9) << "Damage : " << setw(11) << red.GetWizardsDamage()
-			<< blue.GetWizardsDamage() << endl;
-		cout << setw(7) << "Mana : " << setw(13) << red.GetWizardsMana()
-			<< blue.GetWizardsMana() << endl;
-		cout << "Swordmen:\n";
-		cout << setw(5) << "HP : " << setw(15) << red.GetSwordmenHP()
-			<< blue.GetSwordmenHP() << endl;
-		cout << setw(9) << "Damage : " << setw(11) << red.GetSwordmenDamage()
-			<< blue.GetSwordmenDamage() << endl;
-		cout << setw(9) << "Defence : " << setw(10) << red.GetSwordmenShield()
-			<< blue.GetSwordmenShield() << endl;
-		cout << "Bowmen:\n";
-		cout << setw(5) << "HP : " << setw(15) << red.GetBowmenHP()
-			<< blue.GetBowmenHP() << endl;
-		cout << setw(9) << "Damage : " << setw(11) << red.GetBowmenDamage()
-			<< blue.GetBowmenDamage() << endl;
-		cout << setw(7) << "Evade : " << setw(12) << red.GetBowmenEvade()
-			<< blue.GetBowmenEvade() << endl;
-
-		cout << "\n" << setw(18) << right << "FIGHT\n";
-
-		if (itr % 2 == 0)
+		if (red.GameOverCheck())
 		{
-			cout << "Red team fighting ...\n";
-
-			int squad, enemiesSquad;
-			cout << "Which squad is attacking? (1 - Swordmen, 2 - Wizards, 3 - Bowmen): ";
-			cin >> squad;
-			cout << "Who are we attacking? (1 - Swordmen, 2 - Wizards, 3 - Bowmen): ";
-			cin >> enemiesSquad;
-
-			switch (squad)
-			{
-			case 1:
-			{
-				int temp = red.GetSwordmenDamage();
-				Attack(enemiesSquad, temp, blue);
-				break;
-			}
-			case 2:
-			{
-				int temp = red.GetWizardsDamage();
-				Attack(enemiesSquad, temp, blue);
-				break;
-			}
-			case 3:
-			{
-				int temp = red.GetBowmenDamage();
-				Attack(enemiesSquad, temp, blue);
-				break;
-			}
-
-			default:
-				break;
-			}
+			cout << "Blue team wins!\n";
+			break;
 		}
-		else if(itr==100)
+		else if (blue.GameOverCheck())
 		{
-			cout << "Blue team fighting ...\n";
-			int squad = 0, enemiesSquad = 0;
-
-			int min = blue.GetSwordmenDamage();
-			if (blue.GetBowmenDamage() > min)
-			{
-				min = blue.GetBowmenDamage();
-				squad = 3;
-			}
-			else if (blue.GetWizardsDamage() > min)
-			{
-				min = blue.GetWizardsDamage();
-				squad = 2;
-			}
-			else
-				squad = 1;
-
-			switch (squad)
-			{
-			case 1:
-			{
-				int temp = red.GetSwordmenDamage();
-				Attack(enemiesSquad, temp, blue);
-				break;
-			}
-			case 2:
-			{
-				int temp = red.GetWizardsDamage();
-				Attack(enemiesSquad, temp, blue);
-				break;
-			}
-			case 3:
-			{
-				int temp = red.GetBowmenDamage();
-				Attack(enemiesSquad, temp, blue);
-				break;
-			}
-
-			default:
-				break;
-			}
+			cout << "Red team wins!\n";
+			break;
 		}
-
-		itr++;
-		if (itr == 2)
-			key = '3';
 		else
-			key = '1';
+		{
+			cout << setw(20) << left << "RED" << "BLUE\n";
+			cout << "Swordmen:\n";
+			cout << setw(5) << "HP : " << setw(15) << red.GetSwordmenHP()
+				<< blue.GetSwordmenHP() << endl;
+			cout << setw(9) << "Damage : " << setw(11) << red.GetSwordmenDamage()
+				<< blue.GetSwordmenDamage() << endl;
+			cout << setw(9) << "Defence : " << setw(10) << red.GetSwordmenShield()
+				<< blue.GetSwordmenShield() << endl;
+			cout << "Wizards:\n";
+			cout << setw(5) << "HP : " << setw(15) << red.GetWizardsHP()
+				<< blue.GetWizardsHP() << endl;
+			cout << setw(9) << "Damage : " << setw(11) << red.GetWizardsDamage()
+				<< blue.GetWizardsDamage() << endl;
+			cout << setw(7) << "Mana : " << setw(13) << red.GetWizardsMana()
+				<< blue.GetWizardsMana() << endl;
+			cout << "Bowmen:\n";
+			cout << setw(5) << "HP : " << setw(15) << red.GetBowmenHP()
+				<< blue.GetBowmenHP() << endl;
+			cout << setw(9) << "Damage : " << setw(11) << red.GetBowmenDamage()
+				<< blue.GetBowmenDamage() << endl;
+			cout << setw(7) << "Evade : " << setw(12) << red.GetBowmenEvade()
+				<< blue.GetBowmenEvade() << endl;
+
+			cout << "\n" << setw(18) << right << "FIGHT\n";
+
+			if (itr % 2 == 0)
+			{
+				cout << "Red team fighting ...\n";
+
+				int squad, enemiesSquad;
+				cout << "Which squad is attacking? (1 - Swordmen, 2 - Wizards, 3 - Bowmen): ";
+				cin >> squad;
+				cout << "Who are we attacking? (1 - Swordmen, 2 - Wizards, 3 - Bowmen): ";
+				cin >> enemiesSquad;
+
+				Attack(enemiesSquad, MaxDamageCheck(red), blue);
+
+			}
+			else if (itr % 2 != 0)
+			{
+				cout << "Blue team fighting ...\n";
+				int squad = 1, enemiesSquad = 1;
+
+				Attack(MinHPCheck(blue), MaxDamageCheck(blue), red);
+			}
+
+			itr++;
+
+		}
 		system("PAUSE");
 		system("cls");
 	} while (key != '3');
 }
 
-void Attack(int enemiesSquad, int damage, Team &team)
+void Attack(int enemiesSquad, double damage, Team& team)
 {
 	switch (enemiesSquad)
 	{
@@ -351,6 +324,32 @@ void Attack(int enemiesSquad, int damage, Team &team)
 	default:
 		break;
 	}
+}
 
+int MinHPCheck(Team& team)
+{
+	int max = team.GetSwordmenHP();
+	if (team.GetBowmenHP() < max)
+	{
+		max = team.GetBowmenHP();
+		return 3;
+	}
+	if (team.GetWizardsHP() > max)
+	{
+		max = team.GetWizardsHP();
+		return 2;
+	}
+	else
+		return 1;
+}
 
+int MaxDamageCheck(Team& team)
+{
+	int min = team.GetSwordmenDamage();
+	if (team.GetBowmenDamage() > min)
+		min = team.GetBowmenDamage();
+	if (team.GetWizardsDamage() > min)
+		min = team.GetWizardsDamage();
+
+	return min;
 }
