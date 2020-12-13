@@ -8,7 +8,6 @@ using namespace std;
 void Session();
 
 
-
 class Unit
 {
 public:
@@ -201,6 +200,29 @@ public:
 			wizards[i].hp = hpS;
 	}
 
+
+	bool IsSwordmenDead()
+	{
+		if (GetSwordmenHP() == 0)
+			return 1;
+		else
+			return 0;
+	}
+	bool IsBowmenDead()
+	{
+		if (GetBowmenHP() == 0)
+			return 1;
+		else
+			return 0;
+	}
+	bool IsWizardsDead()
+	{
+		if (GetWizardsHP() == 0)
+			return 1;
+		else
+			return 0;
+	}
+
 	bool GameOverCheck()
 	{
 		if (GetSwordmenHP() == 0 && GetBowmenHP() == 0 && GetWizardsHP() == 0)
@@ -308,17 +330,26 @@ void Attack(int enemiesSquad, double damage, Team& team)
 	{
 	case 1:
 	{
-		team.SetSwordmenHP(team.GetSwordmenHP() - damage);
+		if (!team.IsSwordmenDead())
+			team.SetSwordmenHP(team.GetSwordmenHP() - damage);
+		else
+			cout << "You cant hit dead squad. Ruined turn\n";
 		break;
 	}
 	case 2:
 	{
-		team.SetWizardsHP(team.GetWizardsHP() - damage);
+		if (!team.IsWizardsDead())
+			team.SetWizardsHP(team.GetWizardsHP() - damage);
+		else
+			cout << "You cant hit dead squad. Ruined turn\n";
 		break;
 	}
 	case 3:
 	{
-		team.SetBowmenHP(team.GetBowmenHP() - damage);
+		if (!team.IsBowmenDead())
+			team.SetBowmenHP(team.GetBowmenHP() - damage);
+		else
+			cout << "You cant hit dead squad. Ruined turn\n";
 		break;
 	}
 	default:
@@ -328,7 +359,16 @@ void Attack(int enemiesSquad, double damage, Team& team)
 
 int MinHPCheck(Team& team)
 {
-	int max = team.GetSwordmenHP();
+	int max;
+	if (team.GetSwordmenHP() != 0)
+		max = team.GetSwordmenHP();
+	else if (team.GetBowmenHP() != 0)
+		max = team.GetBowmenHP();
+	else if (team.GetWizardsHP() != 0)
+		max = team.GetWizardsHP();
+	else
+		max = 0;
+
 	if (team.GetBowmenHP() < max)
 	{
 		max = team.GetBowmenHP();
@@ -345,11 +385,14 @@ int MinHPCheck(Team& team)
 
 int MaxDamageCheck(Team& team)
 {
-	int min = team.GetSwordmenDamage();
-	if (team.GetBowmenDamage() > min)
+	int min = 0;
+
+	if (team.GetBowmenDamage() > min && team.GetBowmenHP() != 0)
 		min = team.GetBowmenDamage();
-	if (team.GetWizardsDamage() > min)
+	if (team.GetWizardsDamage() > min && team.GetWizardsHP() != 0)
 		min = team.GetWizardsDamage();
+	if (team.GetSwordmenDamage() > min && team.GetSwordmenHP() != 0)
+		min = team.GetSwordmenDamage();
 
 	return min;
 }
