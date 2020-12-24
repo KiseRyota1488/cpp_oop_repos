@@ -124,6 +124,14 @@ public:
 		}
 	}
 
+	int GetRoomsSquare()
+	{
+		int totalSquare = 0;
+		for (int i = 0; i < rooms.size(); i++)
+			totalSquare += rooms[i].GetSquare();
+		return totalSquare;
+	}
+
 	~House()
 	{
 
@@ -140,7 +148,7 @@ int main()
 
 	char key;
 	do {
-		cout << "Menu:\n 1 Add room\n 2 Show all houses with special floor\n 3 Show all rooms in in 1 house\n 4 Exit\n";
+		cout << "Menu:\n 1 Add room\n 2 Show all houses with special floor\n 3 Show all rooms in in 1 house\n 4 Calculate squares\n 5 Exit\n->_";
 		cin >> key;
 
 
@@ -169,7 +177,6 @@ int main()
 
 					if (floor > 0)
 					{
-						cout << "ID|Width|Height\n";
 						for (int i = 0; i < houses.size(); i++)
 						{
 							if (houses[i].GetFloor() == floor)
@@ -218,6 +225,33 @@ int main()
 			}
 			else
 				cout << "No houses\n";
+
+			break;
+		}
+		case '4':
+		{
+			system("cls");
+			char tmp;
+			cout << "Calculate..\n house\n floor\n ..square\n->_";
+			cin >> tmp;
+
+					if (tmp == '1')
+					{
+						int id;
+						cout << "Enter house id: ";
+						cin >> id;
+						cout << "House square is " << houses[id - 1].GetRoomsSquare() << endl;
+					}
+					else if (tmp == '2')
+					{
+						int totalSquare = 0, floor;
+						cout << "Enter floor: ";
+						cin >> floor;
+						for (int i = 0; i < houses.size(); i++)
+							if (floor == houses[i].GetFloor())
+								totalSquare += houses[i].GetRoomsSquare();
+						cout << "Floor " << floor << " square is " << totalSquare << endl;
+					}
 
 			break;
 		}
