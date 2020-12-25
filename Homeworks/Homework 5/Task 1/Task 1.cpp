@@ -12,7 +12,7 @@ private:
 	vector <T2> arr2;
 	vector <T3> arr3;
 public:
-	CShop(vector <T1>& arr1, vector <T2> &arr2, vector <T3> &arr3)
+	CShop(vector <T1>& arr1, vector <T2>& arr2, vector <T3>& arr3)
 	{
 		this->arr1 = arr1;
 		this->arr2 = arr2;
@@ -74,43 +74,75 @@ public:
 			}
 		arr3[id].Print();
 
+	}
+
+	void SortByPriceCheap(vector<T1>& arr1, vector<T2>& arr2, vector<T3>& arr3)
+	{
+		int id = 0, min = 99999;
+
+		for (int i = 0; i < arr1.size(); i++)
+			if (arr1[i].GetPrice() < min)
+			{
+				id = i;
+				min = arr1[i].GetPrice();
+			}
+		min = 99999;
+		arr1[id].Print();
+		for (int i = 0; i < arr2.size(); i++)
+			if (arr2[i].GetPrice() < min)
+			{
+				id = i;
+				min = arr2[i].GetPrice();
+			}
+		min = 99999;
+		arr2[id].Print();
+		for (int i = 0; i < arr3.size(); i++)
+			if (arr3[i].GetPrice() < min)
+			{
+				id = i;
+				min = arr3[i].GetPrice();
+			}
+		arr3[id].Print();
 
 	}
 
-	void Show(char key)
+	void Show(char key, vector <T1>& arr1, vector <T2>& arr2, vector <T3>& arr3)
 	{
+		
 		if (key == '1')
 		{
 			cout << "Book name | Author | Price | New\n";
-			for (int i = 0; i < this->arr1.size(); i++)
-				this->arr1[i].Print();
+			for (int i = 0; i < arr1.size(); i++)
+				arr1[i].Print();
 		}
 		else if (key == '2')
 		{
-			cout << "Disk name | Author | Disk amount |Price | New\n";
-			for (int i = 0; i < this->arr2.size(); i++)
-				this->arr2[i].Print();
+			cout << "Disk name | Author | Disk amount | Price | New\n";
+			for (int i = 0; i < arr2.size(); i++)
+				arr2[i].Print();
 		}
 		else if (key == '3')
 		{
 			cout << "Magazine | Price | New\n";
-			for (int i = 0; i < this->arr3.size(); i++)
-				this->arr3[i].Print();
+			for (int i = 0; i < arr3.size(); i++)
+				arr3[i].Print();
 		}
-		else if ( key == '4')
+		else if (key == '4')
 		{
 			cout << "Book name | Author | Price | New\n";
-			for (int i = 0; i < this->arr1.size(); i++)
-				this->arr1[i].Print();
+			for (int i = 0; i < arr1.size(); i++)
+				arr1[i].Print();
+
 			cout << "Disk name | Author | Disk amount |Price | New\n";
-			for (int i = 0; i < this->arr2.size(); i++)
-				this->arr2[i].Print();
+			for (int i = 0; i < arr2.size(); i++)
+				arr2[i].Print();
+
 			cout << "Magazine | Price | New\n";
-			for (int i = 0; i < this->arr3.size(); i++)
-				this->arr3[i].Print();
+			for (int i = 0; i < arr3.size(); i++)
+				arr3[i].Print();
 		}
 		else
-			cout << "Wrong command!\n";
+			cout << "Wrong\n";
 	}
 };
 
@@ -145,11 +177,11 @@ public:
 		return price;
 	}
 
-	
+
 
 	void Print()
 	{
-		cout << left << setw(10) << name << " " << setw(8) << author << " " << setw(7) 
+		cout << left << setw(10) << name << " " << setw(8) << author << " " << setw(14)
 			<< diskAmount << " " << setw(7) << price << " " << isNew << endl;
 	}
 };
@@ -181,7 +213,7 @@ public:
 	}
 	void Print()
 	{
-		cout << left << setw(10) << name << " "  << setw(8) << price << " " << isNew << endl;
+		cout << left << setw(10) << name << " " << setw(8) << price << " " << isNew << endl;
 	}
 };
 class Book
@@ -226,7 +258,11 @@ int main()
 
 
 	Book b("row", "gar", 500);
+	Book b1("row", "gar", 1500);
+	Book b2("row", "gar", 750);
 	books.push_back(b);
+	books.push_back(b1);
+	books.push_back(b2);
 
 	Audio a("cd", "ac", 15, 100);
 	Audio a2("cd", "ac", 25, 200);
@@ -239,7 +275,7 @@ int main()
 	CShop<Book, Audio, Magazine>shop(books, disks, magazines);
 
 	char key = '0';
-	do{
+	do {
 		shop.CheckForNew(books, disks, magazines);
 
 		cout << "CShop\n 1 Show products\n 2 Show the most expensive product from each category\n"
@@ -254,11 +290,11 @@ int main()
 			system("cls");
 
 			char choice;
-			
+
 			cout << "What category? (1 - Books, 2 - Disks, 3 - Magazines, 4 - All): ";
 			cin >> choice;
 
-			shop.Show(choice);
+			shop.Show(choice, books, disks, magazines);
 
 			break;
 		}
@@ -266,6 +302,11 @@ int main()
 		{
 			shop.SortByPriceExp(books, disks, magazines);
 
+			break;
+		}
+		case '3':
+		{
+			shop.SortByPriceCheap(books, disks, magazines);
 
 			break;
 		}
