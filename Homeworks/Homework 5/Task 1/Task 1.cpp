@@ -16,7 +16,7 @@ public:
 	{
 		this->arr1 = arr1;
 		this->arr2 = arr2;
-		this->arr2 = arr2;
+		this->arr3 = arr3;
 	}
 	CShop() {}
 
@@ -82,31 +82,31 @@ public:
 		if (key == '1')
 		{
 			cout << "Book name | Author | Price | New\n";
-			for (int i = 0; i < arr1.size(); i++)
+			for (int i = 0; i < this->arr1.size(); i++)
 				this->arr1[i].Print();
 		}
 		else if (key == '2')
 		{
 			cout << "Disk name | Author | Disk amount |Price | New\n";
-			for (int i = 0; i < arr2.size(); i++)
+			for (int i = 0; i < this->arr2.size(); i++)
 				this->arr2[i].Print();
 		}
 		else if (key == '3')
 		{
 			cout << "Magazine | Price | New\n";
-			for (int i = 0; i < arr3.size(); i++)
+			for (int i = 0; i < this->arr3.size(); i++)
 				this->arr3[i].Print();
 		}
 		else if ( key == '4')
 		{
 			cout << "Book name | Author | Price | New\n";
-			for (int i = 0; i < arr1.size(); i++)
+			for (int i = 0; i < this->arr1.size(); i++)
 				this->arr1[i].Print();
 			cout << "Disk name | Author | Disk amount |Price | New\n";
-			for (int i = 0; i < arr2.size(); i++)
+			for (int i = 0; i < this->arr2.size(); i++)
 				this->arr2[i].Print();
 			cout << "Magazine | Price | New\n";
-			for (int i = 0; i < arr3.size(); i++)
+			for (int i = 0; i < this->arr3.size(); i++)
 				this->arr3[i].Print();
 		}
 		else
@@ -224,7 +224,6 @@ int main()
 	vector <Audio> disks;
 	vector <Magazine> magazines;
 
-	CShop<Book, Audio, Magazine>shop(books, disks, magazines);
 
 	Book b("row", "gar", 500);
 	books.push_back(b);
@@ -236,8 +235,11 @@ int main()
 	Magazine m("cosmo", 50);
 	magazines.push_back(m);
 
+	CShop<Book, Audio, Magazine>shop(books, disks, magazines);
+
 	char key = '0';
 	do{
+		shop.CheckForNew(books, disks, magazines);
 
 		cout << "CShop\n 1 Show products\n 2 Show the most expensive product from each category\n"
 			<< " 3 Show the cheapest product from each category\n 4 Show avarage price from each category\n"
