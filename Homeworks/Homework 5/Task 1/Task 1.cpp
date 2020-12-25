@@ -46,7 +46,7 @@ public:
 
 	}
 
-	void SortByPriceExp(vector<T1>& arr1, vector<T2>& arr2, vector<T3>& arr3)
+	void FindExpensive(vector<T1>& arr1, vector<T2>& arr2, vector<T3>& arr3)
 	{
 		int id = 0, max = -99999;
 
@@ -76,7 +76,7 @@ public:
 
 	}
 
-	void SortByPriceCheap(vector<T1>& arr1, vector<T2>& arr2, vector<T3>& arr3)
+	void FindCheap(vector<T1>& arr1, vector<T2>& arr2, vector<T3>& arr3)
 	{
 		int id = 0, min = 99999;
 
@@ -104,7 +104,25 @@ public:
 			}
 		arr3[id].Print();
 
+
 	}
+
+	void GetAvaragePrices(vector <T1>& arr1, vector <T2>& arr2, vector <T3>& arr3)
+	{
+		int avgPr[3] = { 0 };
+		for (int i = 0; i < arr1.size(); i++)
+			avgPr[0] += arr1[i].GetPrice();
+		for (int i = 0; i < arr2.size(); i++)
+			avgPr[1] += arr2[i].GetPrice();
+		for (int i = 0; i < arr3.size(); i++)
+			avgPr[2] += arr3[i].GetPrice();
+
+		cout << "Books = " << double(avgPr[0] / arr1.size()) << " Disks = " 
+			<< double(avgPr[1] / arr2.size()) << " Magazines = " << double(avgPr[2] / arr3.size()) << endl;
+	}
+
+	
+	
 
 	void Show(char key, vector <T1>& arr1, vector <T2>& arr2, vector <T3>& arr3)
 	{
@@ -144,6 +162,22 @@ public:
 		else
 			cout << "Wrong\n";
 	}
+
+	void SortByPrice(vector<T1>& arr1, vector<T2>& arr2, vector<T3>& arr3)
+	{
+		for (int i = 0; i < arr1.size() - 1; i++)
+			for (int j = i+1; j < arr1.size(); j++)
+				if (arr1[i].GetPrice() > arr1[j].GetPrice())
+					swap(arr1[i], arr1[j]);
+		for (int i = 0; i < arr2.size() - 1; i++)
+			for (int j = i + 1; j < arr2.size(); j++)
+				if (arr2[i].GetPrice() > arr2[j].GetPrice())
+					swap(arr2[i], arr2[j]);
+		for (int i = 0; i < arr3.size() - 1; i++)
+			for (int j = i + 1; j < arr3.size(); j++)
+				if (arr3[i].GetPrice() > arr3[j].GetPrice())
+					swap(arr3[i], arr3[j]);
+	}
 };
 
 class Audio
@@ -176,8 +210,6 @@ public:
 	{
 		return price;
 	}
-
-
 
 	void Print()
 	{
@@ -280,7 +312,7 @@ int main()
 
 		cout << "CShop\n 1 Show products\n 2 Show the most expensive product from each category\n"
 			<< " 3 Show the cheapest product from each category\n 4 Show avarage price from each category\n"
-			<< " 5 Show the new one\n 6 Sort with price all categories\n 7 Exit\n->_";
+			<< " 5 Sort with price all categories\n 6 Exit\n->_";
 		cin >> key;
 
 		switch (key)
@@ -300,13 +332,26 @@ int main()
 		}
 		case '2':
 		{
-			shop.SortByPriceExp(books, disks, magazines);
+			shop.FindExpensive(books, disks, magazines);
 
 			break;
 		}
 		case '3':
 		{
-			shop.SortByPriceCheap(books, disks, magazines);
+			shop.FindCheap(books, disks, magazines);
+
+			break;
+		}
+		case '4':
+		{
+			shop.GetAvaragePrices(books, disks, magazines);
+
+			break;
+		}
+		case '5':
+		{
+			shop.SortByPrice(books,disks, magazines);
+			shop.Show('4',books, disks, magazines);
 
 			break;
 		}
@@ -316,7 +361,7 @@ int main()
 
 		system("PAUSE");
 		system("cls");
-	} while (key != '7');
+	} while (key != '6');
 
 	return 0;
 }
