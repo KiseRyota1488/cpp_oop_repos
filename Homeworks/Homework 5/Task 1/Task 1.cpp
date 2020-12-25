@@ -12,7 +12,7 @@ private:
 	vector <T2> arr2;
 	vector <T3> arr3;
 public:
-	CShop(vector <T1>& arr1, vector <T2> arr2, vector <T3> arr3)
+	CShop(vector <T1>& arr1, vector <T2> &arr2, vector <T3> &arr3)
 	{
 		this->arr1 = arr1;
 		this->arr2 = arr2;
@@ -231,6 +231,7 @@ int main()
 	Audio a("cd", "ac", 15, 100);
 	Audio a2("cd", "ac", 25, 200);
 	disks.push_back(a);
+	disks.push_back(a2);
 
 	Magazine m("cosmo", 50);
 	magazines.push_back(m);
@@ -253,7 +254,7 @@ int main()
 			system("cls");
 
 			char choice;
-
+			
 			cout << "What category? (1 - Books, 2 - Disks, 3 - Magazines, 4 - All): ";
 			cin >> choice;
 
