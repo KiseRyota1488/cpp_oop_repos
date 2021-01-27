@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+<<<<<<< HEAD
     <Filter Include="Исходные файлы">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
@@ -10,12 +11,24 @@
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
     <Filter Include="Файлы ресурсов">
+=======
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+>>>>>>> ff420cb009ae6e5cfa9d05dcf091f399675d829a
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Task 1.cpp">
+<<<<<<< HEAD
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Stack.cpp">
@@ -26,5 +39,9 @@
     <ClInclude Include="Stack.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
+=======
+      <Filter>Source Files</Filter>
+    </ClCompile>
+>>>>>>> ff420cb009ae6e5cfa9d05dcf091f399675d829a
   </ItemGroup>
 </Project>

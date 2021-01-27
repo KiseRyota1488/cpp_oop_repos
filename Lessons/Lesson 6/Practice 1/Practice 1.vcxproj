@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{febf1f89-5fd3-47e0-9d5a-27987d19e2ee}</ProjectGuid>
-    <RootNamespace>PracticeList</RootNamespace>
+    <ProjectGuid>{752a7c91-713a-4889-8937-6d0d251332fe}</ProjectGuid>
+    <RootNamespace>Practice1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -139,11 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="List.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="List.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Practice 1.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
