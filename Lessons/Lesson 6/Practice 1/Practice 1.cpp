@@ -153,10 +153,10 @@ public:
 		}
 		catch (const exception& ex)
 		{
-			cout <<ex.what() << endl;
+			cout << ex.what() << endl;
 		}
 
-		//Print();
+		Print();
 	}
 
 };
