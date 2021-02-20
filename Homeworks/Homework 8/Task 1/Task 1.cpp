@@ -37,6 +37,7 @@ int main()
 
 
 	//2
+	cout << "V3 = \n";
 	for (int i = 0; i < v3.size(); i++)
 	{
 		cout << v3[i] << " ";
@@ -47,7 +48,7 @@ int main()
 
 	for (int i = 0; i < v1.size(); i++)
 	{
-		write << v3[i] << " ";
+		write << v1[v1.size()-(i+1)] << " ";
 	}
 
 	write.close();
@@ -68,11 +69,12 @@ int main()
 	v2.erase(v2.begin() + 1);
 	v2.pop_back();
 
-
+	cout << "V2 = \n";
 	for (int i = 0; i < v2.size(); i++)
 	{
 		cout << v2[i] << " ";
 	}
+
 
 	//4
 
@@ -85,10 +87,37 @@ int main()
 		}
 	}
 
-	cout << endl;
+	cout << "\nV4 = " << endl;
 	for (int i = 0; i < v4.size(); i++)
 	{
 		cout << v4[i] << " ";
+	}
+
+	//5
+
+	v5.clear();
+
+	for (int i = 0; i < v4.size(); i++)
+	{
+		if (v4[i] % 2 == 0)
+			v5.push_back(v4[i]/2);
+		
+	}
+
+	cout << "\nV5 = \n";
+	for (int i = 0; i < v5.size(); i++)
+	{
+		cout << v5[i] << " ";
+	}
+
+	//6
+
+	swap(v4, v5);
+
+	cout << "\nV5 = \n";
+	for (int i = 0; i < v5.size(); i++)
+	{
+		cout << v5[i] << " ";
 	}
 
 	system("PAUSE");
